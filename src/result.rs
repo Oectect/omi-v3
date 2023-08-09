@@ -9,7 +9,6 @@ use crate::provisioning_session::ProvisioningSession;
 #[derive(Serialize, Debug)]
 #[serde(tag = "result")]
 pub enum ServerResult {
-    // ProvisioningSession messages
     Wait,
     GiveIdentifier,
     GiveStartProvisioningData,
@@ -18,16 +17,15 @@ pub enum ServerResult {
     CurrentlyEndingProvisioning,
     ProvisioningSuccess { adi_pb: String },
 
-    // ProvisioningSession errors
     TextOnly,
     WebsocketError { message: String },
     ClosingPerRequest,
     Timeout,
+    TryAgainSoon { duration: u64 },
     InvalidIdentifier { message: String },
     StartProvisioningError { message: String },
     EndProvisioningError { message: String },
 
-    // HTTP responses
     GetHeadersError { message: String },
     Headers(HashMap<String, String>),
 }
